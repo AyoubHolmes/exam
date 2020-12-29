@@ -210,16 +210,11 @@ void	print_dec(t_var *var, va_list lst)
 	if (dec < 0 && var->point == 0)
 		len++;
 	var->prec = (var->prec > len) ? var->prec - len : 0;
-	if (dec < 0 && var->point)
-		len++;
 	var->width = (var->width > len + var->prec) ? var->width - len - var->prec : 0;
 	if (var->width)
 		print_width(var);
 	if (dec < 0)
-	{
-		dec *= -1;
 		ft_putchar('-', var);
-	}
 	if (var->prec)
 		print_zero(var);
 	if (len > 0)
