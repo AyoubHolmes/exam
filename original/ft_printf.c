@@ -26,7 +26,7 @@ int ft_nbrlen(int n)
 	return (i);
 }
 
-int ft_unslen(unsigned int n)
+int ft_hexalen(unsigned int n)
 {
 	int i = 0;
 	if (n == 0)
@@ -48,6 +48,31 @@ int ft_strlen(const char *s)
 			i++;
 	}
 	return (i);
+}
+
+char    *ft_convert_hexa(unsigned int n)
+{
+	char *res;
+	int mod;
+	int len;
+
+	len = ft_hexalen(n);
+	if (!(res = malloc(len + 1)))
+		return (NULL);
+	res[len--] = '\0';
+	if (n == 0)
+		res[len] = '0';
+	while (n)
+	{
+		mod = n % 16;
+		if (mod < 10)
+			res[len] = mod + 48;
+		if (mod >= 10)
+			res[len] = mod + 87;
+		n = n / 16;
+		len--;
+	}
+	return (res);
 }
 
 int ft_atoi(const char *str)
@@ -78,32 +103,25 @@ int ft_atoi(const char *str)
 	return (convert * sign);
 }
 
-char    *ft_convert_hexa(unsigned int n)
+
+char    *ft_substr(char const *s, unsigned int start, int len)
 {
-	char *res;
-	int mod;
-	int len;
+	char *tmp;
+	int i = 0;
 
-	len = ft_unslen(n);
-	if (!(res = malloc(len + 1)))
+	if (s == NULL)
 		return (NULL);
-	res[len--] = '\0';
-	if (n == 0)
-		res[len] = '0';
-	while (n)
+	if (!(tmp = malloc(len + 1)))
+		return (NULL);
+	while (i < len)
 	{
-		mod = n % 16;
-		if (mod < 10)
-			res[len] = mod + 48;
-		if (mod >= 10)
-			res[len] = mod + 87;
-		n = n / 16;
-		len--;
+		*(tmp + i) = *(s + start);
+		i++;
+		s++;
 	}
-	return (res);
+	*(tmp + i) = '\0'; 
+	return (tmp);
 }
-
-
 
 char    *check_flags(const char *format, t_var *var)
 {
@@ -149,8 +167,8 @@ void    ft_putnbr(int nbr, t_var *var)
 	n = nbr;
 	if (n == -2147483648)
     {
-	ft_putstr("2147483648",var);
-	return ;
+		ft_putstr("2147483648",var);
+		return ;
     }
 	if (n > 9)
 	{
@@ -212,7 +230,7 @@ void    print_hexa(t_var *var, va_list lst)
 	unsigned int hexa = 0;
 	int len = 0;
 	hexa = va_arg(lst, unsigned int);
-	len = ft_unslen(hexa);
+	len = ft_hexalen(hexa);
 	if (var->point && hexa == 0 && var->prec == 0)
 		len = 0;
 	var->prec = (var->prec > len) ? var->prec - len : 0;
@@ -278,8 +296,8 @@ int ft_printf(const char *format, ...)
 	va_end(lst);
 	return(var.count);
 }
-
-/* int main()
+/* 
+int main()
 {
 	int i =0, j = 0;
 
