@@ -229,7 +229,7 @@ void print_hexa(t_var *var, va_list lst)
     int len = 0;
 
     hexa = va_arg(lst, unsigned int);
-    len = ft_nbrlen(hexa);
+    len = ft_hexalen(hexa);
     if (var->point && hexa == 0 && var->prec == 0)
         len = 0;
     var->prec = (var->prec > len) ? var->prec - len : 0;
@@ -242,6 +242,29 @@ void print_hexa(t_var *var, va_list lst)
     {
         char *tmp;
         tmp = ft_convert_hexa(hexa);
+        ft_putstr(tmp, var);
+        free(tmp);
+    }
+}
+
+void print_hexa(t_var *var, va_list lst)
+{
+    unsigned int hexa = 0;
+    int len = 0;
+
+    hexa = va_arg(lst, unsigned int);
+    len = ft_hexalen(hexa);
+    if(var->point && var->prec == 0 && hexa == 0)
+        len = 0;
+    var->prec = (var->prec > len) ? var->prec - len : 0;
+    var->width = (var->width > len + var->prec) ? var->width - len - var->prec : 0;
+    if (var->width)
+        print_width(var);
+    if(var->prec)
+        print_zero(var);
+    if(len > 0)
+    {
+        char *tmp = ft_convert_hexa(hexa);
         ft_putstr(tmp, var);
         free(tmp);
     }
