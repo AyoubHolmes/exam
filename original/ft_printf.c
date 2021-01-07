@@ -29,6 +29,7 @@ int ft_nbrlen(int n)
 int ft_hexalen(unsigned int n)
 {
 	int i = 0;
+
 	if (n == 0)
 		i++;
 	while (n)
@@ -42,6 +43,7 @@ int ft_hexalen(unsigned int n)
 int ft_strlen(const char *s)
 {
 	int i = 0;
+
 	if (s)
 	{
 		while (s[i])
@@ -78,27 +80,27 @@ char    *ft_convert_hexa(unsigned int n)
 int ft_atoi(const char *str)
 {
 	int convert;
-	int index;
+	int i;
 	int sign;
 
 	convert = 0;
-	index = 0;
+	i = 0;
 	sign = 1;
-	while (str[index] == '\t' || str[index] == '\r' || str[index]  == '\n' || str[index] == '\v' || str[index] == '\f' || str[index] == ' ')
-		index++;
-	if (str[index] == '+' && str[index + 1] == '-')
+	while (str[i] == '\t' || str[i] == '\r' || str[i]  == '\n' || str[i] == '\v' || str[i] == '\f' || str[i] == ' ')
+		i++;
+	if (str[i] == '+' && str[i + 1] == '-')
 		return (0);
-	if (str[index] == '+')
-		index++;
-	if (str[index] == '-')
+	if (str[i] == '+')
+		i++;
+	if (str[i] == '-')
 	{
 		sign = -1;
-		index++;
+		i++;
 	}
-	while (str[index] && str[index] >= '0' && str[index] <= '9')
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
-		convert = (convert * 10) + (str[index] - '0');
-		index++; 
+		convert = (convert * 10) + (str[i] - '0');
+		i++; 
 	}
 	return (convert * sign);
 }
@@ -133,8 +135,8 @@ char    *check_flags(const char *format, t_var *var)
 	}
 	if (*format == '.')
 	{
-		var->point = 1;
 		format++;
+		var->point = 1;
 		var->prec = ft_atoi(format);
 		while (*format >= '0' && *format <= '9')
 			format++;

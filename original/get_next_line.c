@@ -145,8 +145,8 @@ int		main(int argc, char **argv)
 
 	while ((i = get_next_line(&line)) == 1)
 	{
-		printf("|%d| %s\n" ,i,line);
+		printf("%s\n" ,line);
 		free(line);
 	}
-    printf("|%d| %s" ,i,line);
+    printf("%s" ,line);
 }
